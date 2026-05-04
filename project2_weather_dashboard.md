@@ -503,7 +503,7 @@ npm run dev
 
 ✅ **Verify:** You see the Vite + React default page at localhost:5173.
 
-## Step 2: Install Tailwind CSS
+## Step 2: Install Tailwind CSS ✅
 
 ```bash
 # Install Tailwind and its Vite plugin (2026 approach — no PostCSS config needed)
@@ -585,7 +585,7 @@ npm install -D \
 # In 2026, Vitest is the standard choice for Vite projects.
 ```
 
-## Step 4: Configure Environment Variables
+## Step 4: Configure Environment Variables ✅
 
 ```bash
 # Create .env.local — NEVER commit this
@@ -759,7 +759,7 @@ vercel dev    # starts both the Vite frontend AND the serverless functions local
 
 ✅ **Verify:** Visit `http://localhost:3000/api/weather?city=London` — you should see raw JSON weather data returned.
 
-## Step 6: Set Up TypeScript Interfaces
+## Step 6: Set Up TypeScript Interfaces ✅
 
 ```typescript
 // src/types/index.ts
