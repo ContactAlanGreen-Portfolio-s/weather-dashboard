@@ -181,7 +181,7 @@ LOADING STATE:
   - NOT a spinner — skeleton loaders are the industry standard
 ```
 
-## 1.2 API Strategy
+## 1.2 API Strategy ✅
 
 ### OpenWeatherMap Free Tier — Endpoints We Will Use
 
