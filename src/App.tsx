@@ -1,47 +1,100 @@
-// src/App.tsx — Sprint 1 version: prove the data flow works
-// We'll add layout and styling in Sprint 2
-
-import { useState } from "react";
+// src/App.tsx — Final version (replaces the Sprint 1 raw data version)
+import { useState, useCallback } from "react";
+import { Header } from "@/components/layout/Header";
+import { SearchBar } from "@/components/search/SearchBar";
+import { CurrentWeatherCard } from "@/components/weather/CurrentWeatherCard";
+import { ForecastGrid } from "@/components/weather/ForecastGrid";
+import {
+  WeatherCardSkeleton,
+  ForecastGridSkeleton,
+} from "@/components/ui/Skeleton";
+//import { ErrorMessage, getErrorType } from "@/components/ui/ErrorMessage";
+import { EmptyState } from "@/components/ui/EmptyState";
 import { useWeather } from "@/hooks/useWeather";
 import { useForecast } from "@/hooks/useForecast";
-import { useDebounce } from "./hooks/useDebounce";
 import { useWeatherStore } from "@/store/weatherStore";
+import type { Coordinates } from "@/types";
+
+// Params shape that drives both query hooks
+type SearchParams =
+  | { type: "city"; city: string }
+  | { type: "coordinates"; coords: Coordinates }
+  | null;
 
 export default function App() {
-  const [inputValue, setInputValue] = useState("");
-  const debouncedCity = useDebounce(inputValue, 500);
   const { units } = useWeatherStore();
+  const [searchParams, setSearchParams] = useState<SearchParams>(null);
 
-  //Only creare query params when city is at least 2 characters
-  const params =
-    debouncedCity.length >= 2
-      ? { type: "city" as const, city: debouncedCity, units }
-      : null;
+  // Stable callbacks to prevent SearchBar re-renders on every App render
+  const handleCitySearch = useCallback((city: string) => {
+    setSearchParams({ type: "city", city });
+  }, []);
 
-  const weather = useWeather(params);
-  const forecast = useForecast(params);
+  const handleLocationSearch = useCallback((coords: Coordinates) => {
+    setSearchParams({ type: "coordinates", coords });
+  }, []);
+
+  // Construct TanStack Query params — includes units so changing units refetches
+  const weatherParams = searchParams
+    ? searchParams.type === "city"
+      ? { type: "city" as const, city: searchParams.city, units }
+      : { type: "coordinates" as const, coords: searchParams.coords, units }
+    : null;
+
+  const weather = useWeather(weatherParams);
+  const forecast = useForecast(weatherParams);
+
+  // Determine overall loading and error state
+  const isLoading = weather.isLoading || forecast.isLoading;
+  //const isError = weather.isError || forecast.isError;
+  //const error = weather.error || forecast.error;
+
+  const hasData = !!(weather.data && forecast.data);
 
   return (
-    <div className="p-8">
-      <input
-        type="text"
-        value={inputValue}
-        onChange={(e) => setInputValue(e.target.value)}
-        placeholder="Enter city name"
-        className="border p-2 rounded"
-      />
+    <div className="min-h-screen bg-slate-50">
+      <Header />
 
-      {/* Raw data dump — Sprint 1 only, to verify API connection */}
-      <pre className="mt-4 text-xs">
-        {weather.isLoading && "Loading weather..."}
-        {weather.isError &&
-          `Error: ${weather.error instanceof Error ? weather.error.message : "Unknown error"}`}
-        {weather.data && JSON.stringify(weather.data, null, 2)}
-      </pre>
+      <main className="mx-auto max-w-4xl px-4 py-8">
+        {/* Search section */}
+        <section className="mb-8">
+          <SearchBar
+            onCitySearch={handleCitySearch}
+            onLocationSearch={handleLocationSearch}
+            isLoading={isLoading}
+          />
+        </section>
 
-      <pre className="mt-4 text-xs">
-        {forecast.data && JSON.stringify(forecast.data, null, 2)}
-      </pre>
+        {/* Content section */}
+        <div className="space-y-6">
+          {/* Empty state — no search yet */}
+          {searchParams === null && <EmptyState />}
+
+          {/* Loading skeletons */}
+          {isLoading && (
+            <>
+              <WeatherCardSkeleton />
+              <ForecastGridSkeleton />
+            </>
+          )}
+
+          {/* Error state */}
+          {/*{!isLoading && isError && (
+            <ErrorMessage
+              type={getErrorType(error)}
+              onRetry={() => setSearchParams(null)}
+            />
+          )} */}
+
+          {/* Success state */}
+          {!isLoading && hasData && (
+            <>
+              <CurrentWeatherCard weather={weather.data!} units={units} />
+              <ForecastGrid forecasts={forecast.data!} units={units} />
+            </>
+          )}
+        </div>
+      </main>
     </div>
   );
 }
