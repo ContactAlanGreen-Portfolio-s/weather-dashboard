@@ -1,13 +1,14 @@
 // src/components/ui/ErrorMessage.tsx
+
 import { AlertTriangle, CloudOff, MapPinOff } from "lucide-react";
 import { cn } from "@/lib/utils";
 
-type ErrorType = "city-not-found" | "api-down" | "generic";
+export type ErrorType = "city-not-found" | "api-down" | "generic";
 
 interface ErroMessageProps {
-  type: ErrorType;
+  type?: ErrorType;
   message?: string;
-  onRetry: () => void;
+  onRetry?: () => void;
 }
 
 // Maps HTTP status codes to error types

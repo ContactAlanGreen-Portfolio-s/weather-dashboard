@@ -61,10 +61,10 @@ export function SearchBar({
             )}
           />
           {/* Clear button — only visible when there is input */}
-          {(inputValue || isLoading) && (
+          {inputValue && (
             <button
               onClick={handleClear}
-              aria-label="Clear search"
+              aria-label={isLoading ? "Loading search" : "Clear search"}
               className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600"
             >
               {isLoading ? (
