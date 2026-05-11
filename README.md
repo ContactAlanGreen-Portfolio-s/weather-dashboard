@@ -2,7 +2,7 @@
 
 <div align="center">
   <!-- TODO: Drop your main showcase screenshot here and replace the path -->
-  ![Weather Dashboard Interface](./docs/screenshots/weather-loaded.png)
+  <img src="docs/screenshots/weather-loaded.png" alt="Weather Dashboard Interface" width="800"/>
 </div>
 
 <br />
@@ -30,9 +30,9 @@ Rather than just building a simple frontend, this project focuses heavily on **a
 
 <div align="center">
   <!-- TODO: Add your empty state screenshot -->
-  ![Empty State](./docs/screenshots/empty-state.png)
+  <img src="docs/screenshots/empty-state.png" alt="Empty State" width="400"/>
   <!-- TODO: Add your error state screenshot -->
-  ![Error State](./docs/screenshots/error-state.png)
+  <img src="docs/screenshots/error-state.png" alt="Error State" width="400"/>
 </div>
 
 ## ✨ Key Features
