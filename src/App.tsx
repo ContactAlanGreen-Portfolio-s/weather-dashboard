@@ -24,6 +24,9 @@ type SearchParams =
 export default function App() {
   const { units } = useWeatherStore();
   const [searchParams, setSearchParams] = useState<SearchParams>(null);
+  
+  // Deliberate type error for CI testing
+  const deliberateError: string = 123;
 
   // Stable callbacks to prevent SearchBar re-renders on every App render
   const handleCitySearch = useCallback((city: string) => {
