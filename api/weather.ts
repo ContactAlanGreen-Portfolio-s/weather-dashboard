@@ -8,6 +8,17 @@
 import type { VercelRequest, VercelResponse } from "@vercel/node";
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
+  // Simple origin check at the top of the handler
+  const origin = req.headers.origin;
+  const allowedOrigins = [
+    "https://weather-dashboard-contactalangreen.vercel.app",
+    "http://localhost:3000",
+  ];
+
+  if (origin && !allowedOrigins.includes(origin)) {
+    return res.status(403).json({ error: "Forbidden" });
+  }
+
   //Only allow GET requests
   if (req.method !== "GET") {
     return res.status(405).json({ error: "Method not allowed" });
