@@ -1,0 +1,43 @@
+# .github/workflows/ci.yml
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  quality:
+    name: Type Check, Lint & Test
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "npm"
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Type check
+        run: npm run type-check
+        # WHY: Catches TypeScript errors before they reach production.
+        # Many runtime bugs are catchable at compile time with strict TS.
+
+      - name: Lint
+        run: npm run lint
+        # WHY: Enforces code style and catches common mistakes (unused vars, etc.)
+
+      - name: Check formatting
+        run: npx prettier --check .
+        # WHY: Ensures consistent formatting across the team.
+
+      - name: Run unit + component tests
+        run: npm run test
+        # WHY: Verifies transformer logic and component rendering.
+        # These run without network access — no real API calls in CI.
