@@ -29,6 +29,7 @@ export function Header() {
 
           <button
             role="switch"
+            aria-label="Toggle temperature unit"
             aria-checked={units === "imperial"}
             onClick={() => setUnits(units === "metric" ? "imperial" : "metric")}
             className={cn(
