@@ -35,19 +35,24 @@ test.describe("Weather Dashboard", () => {
   }) => {
     // Search for a city first
     await page.getByPlaceholder("Search for a city...").fill("Paris");
-    await page.getByText("FR").waitFor({ timeout: 10_000 });
+    // Wait for the city name to appear (ensures weather data is loaded)
+    await expect(page.getByText("Paris")).toBeVisible({ timeout: 10_000 });
 
     // Verify °C is shown initially
-    await expect(page.getByText("°C")).toBeVisible();
+    await expect(
+      page.getByRole("banner").getByText("°C", { exact: true }),
+    ).toBeVisible();
 
     // Click the unit toggle
     await page.getByRole("switch", { name: "Toggle temperature unit" }).click();
 
     // Verify °F is now shown
-    await expect(page.getByText("°F")).toBeVisible();
+    await expect(
+      page.getByRole("banner").getByText("°F", { exact: true }),
+    ).toBeVisible();
   });
 
   test("has correct page title", async ({ page }) => {
-    await expect(page).toHaveTitle(/WeatherDash/);
+    await expect(page).toHaveTitle("weather-dashboard");
   });
 });
