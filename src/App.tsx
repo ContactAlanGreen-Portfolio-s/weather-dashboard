@@ -8,7 +8,7 @@ import {
   WeatherCardSkeleton,
   ForecastGridSkeleton,
 } from "@/components/ui/Skeleton";
-//import { ErrorMessage, getErrorType } from "@/components/ui/ErrorMessage";
+import { ErrorMessage, getErrorType } from "@/components/ui/ErrorMessage";
 import { EmptyState } from "@/components/ui/EmptyState";
 import { useWeather } from "@/hooks/useWeather";
 import { useForecast } from "@/hooks/useForecast";
@@ -46,8 +46,8 @@ export default function App() {
 
   // Determine overall loading and error state
   const isLoading = weather.isLoading || forecast.isLoading;
-  //const isError = weather.isError || forecast.isError;
-  //const error = weather.error || forecast.error;
+  const isError = weather.isError || forecast.isError;
+  const error = weather.error || forecast.error;
 
   const hasData = !!(weather.data && forecast.data);
 
@@ -79,12 +79,12 @@ export default function App() {
           )}
 
           {/* Error state */}
-          {/*{!isLoading && isError && (
+          {!isLoading && isError && (
             <ErrorMessage
               type={getErrorType(error)}
               onRetry={() => setSearchParams(null)}
             />
-          )} */}
+          )}
 
           {/* Success state */}
           {!isLoading && hasData && (
