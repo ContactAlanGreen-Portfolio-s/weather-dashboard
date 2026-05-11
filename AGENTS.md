@@ -7,13 +7,13 @@
 
 ## Repo Context
 
-| Property | Value |
-|----------|-------|
-| Project | Weather Dashboard — Portfolio Project 2 |
-| Type | Frontend SPA + Vercel Serverless Functions |
-| Framework | Vite + React 18 + TypeScript |
-| Test Runner | Vitest (unit/component), Playwright (E2E) |
-| Deployment | Vercel |
+| Property    | Value                                      |
+| ----------- | ------------------------------------------ |
+| Project     | Weather Dashboard — Portfolio Project 2    |
+| Type        | Frontend SPA + Vercel Serverless Functions |
+| Framework   | Vite + React 18 + TypeScript               |
+| Test Runner | Vitest (unit/component), Playwright (E2E)  |
+| Deployment  | Vercel                                     |
 
 ---
 
@@ -43,6 +43,7 @@
 
 The transformer functions are the most critical logic in the project. Any change
 must be accompanied by updated unit tests that cover:
+
 - The changed calculation
 - The edge cases around it (null values, empty arrays, rounding)
 
@@ -113,11 +114,11 @@ Examples:
 
 ## Project Documentation Map
 
-| File | Purpose |
-|------|---------|
-| `project2_weather_dashboard.md` | Full step-by-step build guide |
-| `testing_guide_project2.md` | Testing strategy and test case definitions |
-| `CLAUDE.md` | Architecture rules and conventions |
-| `AGENTS.md` | This file — agent-specific guidance |
-| `github_project_setup.md` | GitHub Project board and issue setup |
-| `guided_learning_project2.md` | Concept explanations and code walkthroughs |
+| File                            | Purpose                                    |
+| ------------------------------- | ------------------------------------------ |
+| `project2_weather_dashboard.md` | Full step-by-step build guide              |
+| `testing_guide_project2.md`     | Testing strategy and test case definitions |
+| `CLAUDE.md`                     | Architecture rules and conventions         |
+| `AGENTS.md`                     | This file — agent-specific guidance        |
+| `github_project_setup.md`       | GitHub Project board and issue setup       |
+| `guided_learning_project2.md`   | Concept explanations and code walkthroughs |

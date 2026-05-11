@@ -1,0 +1,20 @@
+# Generated/build output
+dist/
+dist-ssr/
+node_modules/
+.vercel/
+.vite/
+coverage/
+
+# Playwright reports and test artefacts
+playwright-report/
+test-results/
+
+# Lock file (auto-generated, not hand-formatted)
+package-lock.json
+
+# Markdown docs (project guide files — long lines intentional)
+project2_weather_dashboard\ (1).md
+guided_learning_project2.md
+github_project_setup.md
+testing_guide_project2.md

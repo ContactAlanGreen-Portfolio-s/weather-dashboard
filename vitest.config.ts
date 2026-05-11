@@ -18,5 +18,8 @@ export default defineConfig({
     // WHY globals: Allows using describe/it/expect without importing them.
     // Same API as Jest — minimises learning curve.
     setupFiles: ["./src/__tests__/setup.ts"],
+    // WHY include: Prevents Vitest from picking up Playwright E2E specs in e2e/.
+    // Without this, Vitest tries to run Playwright's test.describe() and crashes.
+    include: ["src/__tests__/**/*.{test,spec}.{ts,tsx}"],
   },
 });

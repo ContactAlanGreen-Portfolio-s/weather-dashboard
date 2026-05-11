@@ -27,15 +27,19 @@ Serverless Functions in the `api/` directory). The `OPENWEATHER_API_KEY` env var
 is server-side only — never prefixed with `VITE_`, never referenced in `src/`.
 
 **Correct:**
+
 ```typescript
 // In src/ — call our proxy
-const res = await fetch('/api/weather?city=London')
+const res = await fetch("/api/weather?city=London");
 ```
 
 **Wrong:**
+
 ```typescript
 // In src/ — direct API call with exposed key
-const res = await fetch(`https://api.openweathermap.org/...&appid=${import.meta.env.VITE_API_KEY}`)
+const res = await fetch(
+  `https://api.openweathermap.org/...&appid=${import.meta.env.VITE_API_KEY}`,
+);
 ```
 
 ### 2. Transform at the Boundary
@@ -47,6 +51,7 @@ types — never raw `CurrentWeatherResponse` or `ForecastResponse`.
 ### 3. No Logic in Components
 
 Components render UI only. Business logic belongs in:
+
 - `src/lib/transformers.ts` — data transformation
 - `src/lib/utils.ts` — formatting utilities
 - `src/hooks/` — data fetching and side effects
@@ -74,11 +79,11 @@ All components use named exports (not default exports), except `App.tsx`.
 
 ## State Management
 
-| State | Tool | Location |
-|-------|------|----------|
-| Server data (weather, forecast) | TanStack Query | `src/hooks/` |
+| State                               | Tool              | Location                    |
+| ----------------------------------- | ----------------- | --------------------------- |
+| Server data (weather, forecast)     | TanStack Query    | `src/hooks/`                |
 | User preferences (units, last city) | Zustand + persist | `src/store/weatherStore.ts` |
-| Local UI state (input value) | useState | Inside component |
+| Local UI state (input value)        | useState          | Inside component            |
 
 Do not add Zustand state for things that belong in React local state.
 Do not add TanStack Query queries that aren't fetching from an external source.
@@ -113,8 +118,8 @@ npm run test          # all unit + component tests must pass
 
 ## Environment Variables
 
-| Variable | Location | Purpose |
-|----------|----------|---------|
+| Variable              | Location                                         | Purpose                           |
+| --------------------- | ------------------------------------------------ | --------------------------------- |
 | `OPENWEATHER_API_KEY` | Server-side only (`.env.local`, Vercel env vars) | OpenWeatherMap API authentication |
 
 Do not add `VITE_` prefix to this variable. It must not appear in the browser bundle.
